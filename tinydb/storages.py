@@ -98,7 +98,7 @@ class JSONStorage(Storage):
 
         # Create the file if it doesn't exist and creating is allowed by the
         # access mode
-        if any([character in self._mode for character in ('+', 'w', 'a')]):  # any of the writing modes
+        if any(character in self._mode for character in ('+', 'w', 'a')):  # any of the writing modes
             touch(path, create_dirs=create_dirs)
 
         # Open the file for reading/writing
@@ -117,12 +117,11 @@ class JSONStorage(Storage):
             # File is empty so we return ``None`` so TinyDB can properly
             # initialize the database
             return None
-        else:
-            # Return the cursor to the beginning of the file
-            self._handle.seek(0)
+        # Return the cursor to the beginning of the file
+        self._handle.seek(0)
 
-            # Load the JSON contents of the file
-            return json.load(self._handle)
+        # Load the JSON contents of the file
+        return json.load(self._handle)
 
     def write(self, data: Dict[str, Dict[str, Any]]):
         # Move the cursor to the beginning of the file just in case
